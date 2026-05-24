@@ -36,4 +36,4 @@ Open in Google Colab and run all cells top to bottom.
 GPU recommended (T4 or better).
 
 ## 👨‍💻 Author
-Made by [Your Name] | CSE-AI
+Made by [Ansh Parashar]| CSE-AI
