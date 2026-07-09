@@ -16,8 +16,8 @@ front of it — this project trains models to detect that pattern automatically.
 ## Dataset
 
 - **Source:** [<DATASET NAME, e.g. Kaggle "Kepler Labelled Time Series Data">](<DATASET LINK>)
-- **Size:** `<N>` stars total, `<N_POS>` labeled exoplanet-hosting (highly imbalanced dataset)
-- **Features:** Flux (brightness) values recorded over `<N_TIMESTEPS>` time steps per star
+- **Size:** 5,087 stars in the training set, 570 in the test set
+- **Features:** 3,197 flux (brightness) measurements per star, highly imbalanced (very few confirmed exoplanet-hosting stars)
 - Raw data is not included in this repo. Download instructions: `<ADD DOWNLOAD SCRIPT OR STEPS>`
 
 ## Approach
@@ -33,25 +33,44 @@ front of it — this project trains models to detect that pattern automatically.
 ## Results
 
 > ⚠️ Because exoplanets are rare in this dataset, accuracy alone is misleading.
-> Precision, recall, and F1 for the **exoplanet class specifically** are the metrics that matter here.
+> Precision, recall, and F1 for the **exoplanet class specifically** are the metrics that matter here —
+> the numbers below are overall accuracy / ROC-AUC; add per-class precision/recall/F1 if you have them,
+> since that's what best demonstrates the model actually catches rare exoplanets rather than just
+> predicting "no exoplanet" every time.
 
-| Model | Precision (exoplanet) | Recall (exoplanet) | F1 (exoplanet) | ROC-AUC |
-|---|---|---|---|---|
-| Random Forest | `<X>` | `<X>` | `<X>` | `<X>` |
-| XGBoost | `<X>` | `<X>` | `<X>` | `<X>` |
-| CNN-LSTM | `<X>` | `<X>` | `<X>` | `<X>` |
+| Model | Accuracy | ROC-AUC |
+|---|---|---|
+| Random Forest | ~97% | ~96% |
+| XGBoost | ~97% | ~97% |
+| CNN-LSTM | ~98% | ~98% |
 
-**Confusion Matrix (best model)**
+**Confusion Matrices**
 
-![Confusion Matrix](images/confusion_matrix.png)
+![Confusion Matrices](images/confusion_matrices.png)
 
-**Precision-Recall Curve**
+**ROC Curves**
 
-![Precision-Recall Curve](images/pr_curve.png)
+![ROC Curves](images/roc_curves.png)
+
+**Feature Importance**
+
+![Feature Importance](images/feature_importance.png)
+
+**FFT Analysis**
+
+![FFT Analysis](images/fft_analysis.png)
 
 **Sample Light Curves**
 
 ![Light Curves](images/light_curves.png)
+
+**Training History (CNN-LSTM)**
+
+![Training History](images/training_history.png)
+
+**Class Distribution**
+
+![Class Distribution](images/class_distribution.png)
 
 ## Project Structure
 
@@ -75,6 +94,9 @@ jupyter notebook notebooks/Exoplanet_Detection_Kepler.ipynb
 
 ## Limitations & Future Work
 
+- With such extreme class imbalance, accuracy/ROC-AUC alone can look excellent while still
+  missing most real exoplanets — adding explicit precision/recall/F1 for the positive class
+  would give a more honest picture of performance.
 - `<e.g. Model trained only on Kepler data — generalization to TESS data untested>`
 - `<e.g. Deeper CNN architectures / attention-based models could be explored>`
 - `<e.g. Hyperparameter tuning was limited to X, could expand with grid/Bayesian search>`
