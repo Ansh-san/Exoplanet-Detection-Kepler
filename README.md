@@ -1,39 +1,89 @@
-# 🚀 Exoplanet Detection using NASA Kepler Data
+# Exoplanet Detection from Kepler Light Curves 🔭
 
-> Detecting exoplanets from stellar light curves using Machine Learning & Deep Learning
+Detecting exoplanets from NASA Kepler light curves using classical ML and Deep Learning.
 
-## 📌 Problem Statement
-When a planet orbits a star, it causes a tiny dip in the star's brightness.
-NASA's Kepler telescope recorded these **light curves**. This project trains AI models to detect those dips and classify whether a star hosts an exoplanet.
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
 
-## 🧠 Models Used
-| Model | Accuracy | ROC-AUC |
-|-------|----------|---------|
-| Random Forest | ~97% | ~96% |
-| XGBoost | ~97% | ~97% |
-| CNN + LSTM | ~98% | ~98% |
+## Overview
 
-## 🔧 Tech Stack
-- Python, NumPy, Pandas
-- Scikit-learn, XGBoost
-- TensorFlow / Keras (CNN + LSTM)
-- SMOTE (imbalanced-learn)
-- Matplotlib, Seaborn
+This project analyzes flux (light intensity) data from stars observed by the NASA Kepler
+space telescope to classify each star as **exoplanet-hosting** or **non-exoplanet-hosting**.
+A transiting exoplanet causes a small, periodic dip in a star's brightness as it passes in
+front of it — this project trains models to detect that pattern automatically.
 
-## 📊 Key Features
-- FFT-based feature engineering (frequency domain analysis)
-- SMOTE to handle severe class imbalance (~37 exoplanets vs 5000 normal stars)
-- 1D CNN + LSTM hybrid deep learning model
-- Ensemble prediction from 3 models
+## Dataset
 
-## 🗂️ Dataset
-NASA Kepler Space Telescope light curve data
-- 5,087 training stars | 570 test stars
-- 3,197 flux measurements per star
+- **Source:** [<DATASET NAME, e.g. Kaggle "Kepler Labelled Time Series Data">](<DATASET LINK>)
+- **Size:** `<N>` stars total, `<N_POS>` labeled exoplanet-hosting (highly imbalanced dataset)
+- **Features:** Flux (brightness) values recorded over `<N_TIMESTEPS>` time steps per star
+- Raw data is not included in this repo. Download instructions: `<ADD DOWNLOAD SCRIPT OR STEPS>`
 
-## 🚀 How to Run
-Open in Google Colab and run all cells top to bottom.
-GPU recommended (T4 or better).
+## Approach
 
-## 👨‍💻 Author
-Made by [Ansh Parashar]| CSE-AI
+1. **Preprocessing** — normalization, noise reduction, handling missing values
+2. **Feature engineering** — FFT (Fast Fourier Transform) analysis to extract frequency-domain features from light curves
+3. **Class imbalance handling** — SMOTE applied **only on the training split** to avoid data leakage
+4. **Models trained:**
+   - Random Forest
+   - XGBoost
+   - CNN-LSTM (deep learning, sequence-based)
+
+## Results
+
+> ⚠️ Because exoplanets are rare in this dataset, accuracy alone is misleading.
+> Precision, recall, and F1 for the **exoplanet class specifically** are the metrics that matter here.
+
+| Model | Precision (exoplanet) | Recall (exoplanet) | F1 (exoplanet) | ROC-AUC |
+|---|---|---|---|---|
+| Random Forest | `<X>` | `<X>` | `<X>` | `<X>` |
+| XGBoost | `<X>` | `<X>` | `<X>` | `<X>` |
+| CNN-LSTM | `<X>` | `<X>` | `<X>` | `<X>` |
+
+**Confusion Matrix (best model)**
+
+![Confusion Matrix](images/confusion_matrix.png)
+
+**Precision-Recall Curve**
+
+![Precision-Recall Curve](images/pr_curve.png)
+
+**Sample Light Curves**
+
+![Light Curves](images/light_curves.png)
+
+## Project Structure
+
+```
+├── notebooks/
+│   └── Exoplanet_Detection_Kepler.ipynb   # main exploration & training notebook
+├── images/                                 # result plots used in this README
+├── requirements.txt
+├── LICENSE
+└── README.md
+```
+
+## How to Run
+
+```bash
+git clone https://github.com/Ansh-san/Exoplanet-Detection-Kepler.git
+cd Exoplanet-Detection-Kepler
+pip install -r requirements.txt
+jupyter notebook notebooks/Exoplanet_Detection_Kepler.ipynb
+```
+
+## Limitations & Future Work
+
+- `<e.g. Model trained only on Kepler data — generalization to TESS data untested>`
+- `<e.g. Deeper CNN architectures / attention-based models could be explored>`
+- `<e.g. Hyperparameter tuning was limited to X, could expand with grid/Bayesian search>`
+
+## References
+
+- NASA Kepler Mission: https://www.nasa.gov/mission_pages/kepler/main/index.html
+- `<Add dataset citation here>`
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
